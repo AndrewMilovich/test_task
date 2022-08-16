@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <style type="text/css">
+        #my-text-box {
+            font-size: 18px; /* or larger */
+            height: 1.5em; /* or larger */
+            width: 585px; /* or larger */
+        }
+
+        textarea {
+            width: 585px;
+            height: 300px;
+        }
+
+        .form-section {
+            overflow: hidden;
+            width: 700px;
+        }
+
+        .fleft {
+            float: left
+        }
+
+        .fright {
+            float: left;
+            padding-left: 15px;
+        }
+
+        .fright button {
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+
+    <script language="javascript" type="text/javascript">
+        let arr = []
+        let newArr = []
+
+        function sortByValue() {
+            let sortByValue = arr.sort((a, b) => a.value.localeCompare(b.value));
+            sortByValue.map(value => newArr.push(value.name + '=' + value.value + "\n"))
+            let textArea = document.getElementById('output');
+            newArr.toString().replace(',', '')
+            textArea.textContent = newArr.toString().replace(/[,%]/g, '')
+        }
+
+        function sortByName() {
+            let sortByName = arr.sort((a, b) => a.name.localeCompare(b.name));
+            console.log(sortByName);
+            sortByName.map(value => newArr.push(value.name + '=' + value.value + "\n"))
+            let textArea = document.getElementById('output');
+            newArr.toString().replace(',', '')
+            textArea.textContent = newArr.toString().replace(/[,%]/g, '')
+        }
+
+        function addText() {
+            let nameValue = document.getElementById('my-text-box').value;
+            if (/^([a-zA-Z0-9]+=[a-zA-Z0-9]+)$/.test(nameValue)) {
+                document.getElementById('output').textContent += nameValue + '\n';
+                let split = nameValue.split('=');
+                let item = {
+                    name: split[0], value: split[1]
+                }
+                arr.push(item)
+            } else
+                alert('Bad value.');
+        }
+    </script>
+</head>
+
+<body>
+<h3>Test</h3>
+
+<div class="form-section">
+    <div class="fleft">
+        <input type='text' id='my-text-box' name='my-text-box' value="Name=Value"/>
+    </div>
+    <div class="fright">
+        <button id='add' onclick="addText()" type="button">Add</button>
+    </div>
+</div>
+
+</br>
+</br>
+</br>
+
+<div class="form-section">
+    <div class="fleft">
+        <textarea name='outputtext' id='output'></textarea>
+    </div>
+    <div class="fright">
+        <button onclick="sortByName()" type="button">Sort by name</button>
+        <button onclick="sortByValue()" type="button">Sort by value</button>
+    </div>
+</div>
+
+</body>
+</html>
